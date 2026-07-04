@@ -65,12 +65,8 @@ func _ready() -> void:
 	material.albedo_color = Color(0.33, 0.4, 0.21)
 	material.roughness = 0.95
 
-	mesh_instance.mesh = st.commit()
+	var mesh := st.commit()
+	mesh_instance.mesh = mesh
 	mesh_instance.material_override = material
 
-	var shape := HeightMapShape3D.new()
-	shape.map_width = verts_per_side
-	shape.map_depth = verts_per_side
-	shape.map_data = heights
-	collision_shape.shape = shape
-	collision_shape.scale = Vector3(step, 1.0, step)
+	collision_shape.shape = mesh.create_trimesh_shape()
