@@ -12,3 +12,6 @@ data_*/
 
 # System / editor files
 .DS_Store
+
+# Claude Code local session runtime state
+.claude/scheduled_tasks.lock

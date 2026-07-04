@@ -12,10 +12,21 @@ extends CharacterBody3D
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @onready var camera_pivot: Node3D = $CameraPivot
+@onready var anim_player: AnimationPlayer = find_child("AnimationPlayer", true, false)
+
+var _current_anim: String = ""
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _play(anim_name: String) -> void:
+	if anim_player == null or _current_anim == anim_name:
+		return
+	if anim_player.has_animation(anim_name):
+		anim_player.play(anim_name)
+		_current_anim = anim_name
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -53,3 +64,14 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, walk_speed)
 
 	move_and_slide()
+
+	_update_animation()
+
+
+func _update_animation() -> void:
+	if not is_on_floor():
+		_play("Jump_Loop")
+	elif Vector2(velocity.x, velocity.z).length() > 0.5:
+		_play("Walk_Loop")
+	else:
+		_play("Idle_Loop")
