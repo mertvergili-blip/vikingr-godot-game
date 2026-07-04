@@ -21,6 +21,9 @@ const RESOURCE_LABELS_TR: Dictionary = {
 }
 
 @onready var prompt_label: Label = $PromptLabel
+@onready var dialogue_panel: PanelContainer = $DialoguePanel
+@onready var speaker_label: Label = $DialoguePanel/Margin/VBox/Speaker
+@onready var line_label: Label = $DialoguePanel/Margin/VBox/Line
 
 
 func _ready() -> void:
@@ -29,6 +32,17 @@ func _ready() -> void:
 	for resource_name in resource_labels:
 		_update_label(resource_name, Inventory.get_amount(resource_name))
 	set_prompt("")
+	hide_dialogue()
+
+
+func show_dialogue(speaker: String, text: String) -> void:
+	speaker_label.text = speaker
+	line_label.text = text
+	dialogue_panel.visible = true
+
+
+func hide_dialogue() -> void:
+	dialogue_panel.visible = false
 
 
 func _on_resource_changed(resource_name: String, new_amount: int) -> void:

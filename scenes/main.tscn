@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="2"]
@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" path="res://assets/kenney/retro_fantasy/dock-corner.glb" id="17"]
 [ext_resource type="PackedScene" path="res://scenes/fishing_spot.tscn" id="18"]
 [ext_resource type="PackedScene" path="res://scenes/animal_resource.tscn" id="19"]
+[ext_resource type="PackedScene" path="res://scenes/npc.tscn" id="20"]
+[ext_resource type="PackedScene" path="res://assets/kenney/survival/workbench-anvil.glb" id="21"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ocean"]
 size = Vector2(3000, 3000)
@@ -163,6 +165,59 @@ yield_amount = 1
 cooldown_time = 20.0
 action_label = "Süt Sağ"
 body_color = Color(0.55, 0.45, 0.35, 1)
+
+[node name="Anvil" parent="Gathering" instance=ExtResource("21")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1)
+
+[node name="Halvard" parent="." instance=ExtResource("20")]
+position = Vector3(0, 0, 3)
+terrain_path = NodePath("../Terrain")
+npc_name = "Reis Halvard"
+dialogue_lines = ["Köyümüze hoş geldin, genç. Bir gün büyük işler başaracaksın.", "Şöhretini artırmak istiyorsan bana gel."]
+day_zone_center = Vector3(0, 0, 3)
+day_zone_radius = 5.0
+night_zone_center = Vector3(-3.5, 0, 3)
+night_zone_radius = 1.5
+
+[node name="Bjorn" parent="." instance=ExtResource("20")]
+position = Vector3(4, 0, 1)
+terrain_path = NodePath("../Terrain")
+npc_name = "Björn"
+dialogue_lines = ["Demirci Björn benim. Baltan köreldiyse bana uğra.", "Reis Adayı olunca sana kılıç dövebilirim."]
+day_zone_center = Vector3(4, 0, 1)
+day_zone_radius = 3.0
+night_zone_center = Vector3(4, 0, 1)
+night_zone_radius = 1.5
+
+[node name="Audur" parent="." instance=ExtResource("20")]
+position = Vector3(0, 0, 0)
+terrain_path = NodePath("../Terrain")
+npc_name = "Auður"
+dialogue_lines = ["Dikilitaşlar bize atalarımızın yolunu gösterir.", "Auður'a adak sun, kutsanasın.", "Steinar'ın gözlerinde kurnazlık var... dikkatli ol."]
+day_zone_center = Vector3(0, 0, 0)
+day_zone_radius = 4.0
+night_zone_center = Vector3(0, 0, 0)
+night_zone_radius = 2.0
+
+[node name="Steinar" parent="." instance=ExtResource("20")]
+position = Vector3(20, 0, -15)
+terrain_path = NodePath("../Terrain")
+npc_name = "Steinar"
+dialogue_lines = ["Bir gün reis ben olacağım, sen değil.", "Şöhretin benimkini geçemez, çiftçi."]
+day_zone_center = Vector3(20, 0, -15)
+day_zone_radius = 8.0
+night_zone_center = Vector3(20, 0, -15)
+night_zone_radius = 3.0
+
+[node name="Freydis" parent="." instance=ExtResource("20")]
+position = Vector3(3, 0, 15)
+terrain_path = NodePath("../Terrain")
+npc_name = "Freydis"
+dialogue_lines = ["Denizi seviyorum ama tek başıma açılmaya korkuyorum.", "Bana güvenini kazandırırsan, birlikte akına çıkarız."]
+day_zone_center = Vector3(3, 0, 15)
+day_zone_radius = 5.0
+night_zone_center = Vector3(3, 0, 15)
+night_zone_radius = 2.0
 
 [node name="Player" parent="." instance=ExtResource("1")]
 position = Vector3(0, 3, 5)

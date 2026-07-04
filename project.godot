@@ -50,6 +50,7 @@ interact={
 
 [autoload]
 
+GameClock="*res://scripts/game_clock.gd"
 Inventory="*res://scripts/inventory.gd"
 
 [physics]
