@@ -13,12 +13,30 @@ extends StaticBody3D
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 
+var _noise: FastNoiseLite
 
-func _ready() -> void:
+
+func _make_noise() -> FastNoiseLite:
 	var noise := FastNoiseLite.new()
 	noise.seed = noise_seed
 	noise.frequency = noise_frequency
 	noise.fractal_octaves = 4
+	return noise
+
+
+## Recomputes the terrain height at an arbitrary world (x, z), for placing
+## props/vegetation without needing a physics raycast against the mesh.
+func get_height(x: float, z: float) -> float:
+	if _noise == null:
+		_noise = _make_noise()
+	var half := terrain_size * 0.5
+	var dist_ratio: float = Vector2(x, z).length() / half
+	var falloff: float = clamp(dist_ratio, clearing_radius_ratio, 1.0)
+	return _noise.get_noise_2d(x, z) * height_scale * falloff
+
+
+func _ready() -> void:
+	_noise = _make_noise()
 
 	var verts_per_side := resolution + 1
 	var half := terrain_size * 0.5
@@ -31,9 +49,7 @@ func _ready() -> void:
 		for x in verts_per_side:
 			var wx := -half + x * step
 			var wz := -half + z * step
-			var dist_ratio: float = Vector2(wx, wz).length() / half
-			var falloff: float = clamp(dist_ratio, clearing_radius_ratio, 1.0)
-			heights[z * verts_per_side + x] = noise.get_noise_2d(wx, wz) * height_scale * falloff
+			heights[z * verts_per_side + x] = get_height(wx, wz)
 
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)

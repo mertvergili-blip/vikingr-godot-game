@@ -1,8 +1,17 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/day_night_cycle.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/vegetation.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/snap_to_terrain.gd" id="5"]
+[ext_resource type="PackedScene" path="res://assets/kenney/survival/tent.glb" id="6"]
+[ext_resource type="PackedScene" path="res://assets/kenney/survival/campfire-pit.glb" id="7"]
+[ext_resource type="PackedScene" path="res://assets/kenney/survival/box.glb" id="8"]
+[ext_resource type="PackedScene" path="res://assets/kenney/survival/barrel.glb" id="9"]
+[ext_resource type="PackedScene" path="res://assets/kenney/survival/chest.glb" id="10"]
+[ext_resource type="PackedScene" path="res://assets/kenney/survival/fence.glb" id="11"]
+[ext_resource type="PackedScene" path="res://assets/kenney/survival/bedroll.glb" id="12"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
 sky_top_color = Color(0.36, 0.46, 0.6, 1)
@@ -40,6 +49,38 @@ script = ExtResource("2")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain"]
+
+[node name="Vegetation" type="Node3D" parent="."]
+script = ExtResource("4")
+terrain_path = NodePath("../Terrain")
+
+[node name="Camp" type="Node3D" parent="."]
+script = ExtResource("5")
+terrain_path = NodePath("../Terrain")
+
+[node name="Tent" parent="Camp" instance=ExtResource("6")]
+transform = Transform3D(0.809017, 0, 0.587785, 0, 1, 0, -0.587785, 0, 0.809017, -3.5, 0, 3)
+
+[node name="Campfire" parent="Camp" instance=ExtResource("7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 4)
+
+[node name="Bedroll" parent="Camp" instance=ExtResource("12")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -2.5, 0, 5.5)
+
+[node name="Chest" parent="Camp" instance=ExtResource("10")]
+transform = Transform3D(0.7071, 0, 0.7071, 0, 1, 0, -0.7071, 0, 0.7071, 3, 0, 2.5)
+
+[node name="Box" parent="Camp" instance=ExtResource("8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0, 3.4)
+
+[node name="Barrel" parent="Camp" instance=ExtResource("9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0, 1.5)
+
+[node name="FenceA" parent="Camp" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 6.5)
+
+[node name="FenceB" parent="Camp" instance=ExtResource("11")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, 6.5)
 
 [node name="Player" parent="." instance=ExtResource("1")]
 position = Vector3(0, 3, 5)
