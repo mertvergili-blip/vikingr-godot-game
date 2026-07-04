@@ -52,6 +52,8 @@ interact={
 
 GameClock="*res://scripts/game_clock.gd"
 Inventory="*res://scripts/inventory.gd"
+Fame="*res://scripts/fame.gd"
+QuestManager="*res://scripts/quest_manager.gd"
 
 [physics]
 

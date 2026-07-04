@@ -24,6 +24,8 @@ const RESOURCE_LABELS_TR: Dictionary = {
 @onready var dialogue_panel: PanelContainer = $DialoguePanel
 @onready var speaker_label: Label = $DialoguePanel/Margin/VBox/Speaker
 @onready var line_label: Label = $DialoguePanel/Margin/VBox/Line
+@onready var fame_label: Label = $Margin/ResourceList/Fame
+@onready var quest_label: Label = $QuestLabel
 
 
 func _ready() -> void:
@@ -33,6 +35,12 @@ func _ready() -> void:
 		_update_label(resource_name, Inventory.get_amount(resource_name))
 	set_prompt("")
 	hide_dialogue()
+
+	Fame.player_fame_changed.connect(_on_fame_changed)
+	Fame.steinar_fame_changed.connect(_on_fame_changed)
+	QuestManager.quest_advanced.connect(_on_quest_advanced)
+	_on_fame_changed(0)
+	_on_quest_advanced(0)
 
 
 func show_dialogue(speaker: String, text: String) -> void:
@@ -47,11 +55,20 @@ func hide_dialogue() -> void:
 
 func _on_resource_changed(resource_name: String, new_amount: int) -> void:
 	_update_label(resource_name, new_amount)
+	_on_quest_advanced(QuestManager.current_index)
 
 
 func _update_label(resource_name: String, amount: int) -> void:
 	if resource_labels.has(resource_name):
 		resource_labels[resource_name].text = "%s: %d" % [RESOURCE_LABELS_TR[resource_name], amount]
+
+
+func _on_fame_changed(_value) -> void:
+	fame_label.text = "Şöhret: %d (%s) | Steinar: %d" % [Fame.player_fame, Fame.get_title(), int(Fame.steinar_fame)]
+
+
+func _on_quest_advanced(_index: int) -> void:
+	quest_label.text = "Görev: " + QuestManager.progress_text()
 
 
 func set_prompt(text: String) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=27 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="2"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" path="res://scenes/animal_resource.tscn" id="19"]
 [ext_resource type="PackedScene" path="res://scenes/npc.tscn" id="20"]
 [ext_resource type="PackedScene" path="res://assets/kenney/survival/workbench-anvil.glb" id="21"]
+[ext_resource type="Script" path="res://scripts/halvard_npc.gd" id="22"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ocean"]
 size = Vector2(3000, 3000)
@@ -170,6 +171,7 @@ body_color = Color(0.55, 0.45, 0.35, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1)
 
 [node name="Halvard" parent="." instance=ExtResource("20")]
+script = ExtResource("22")
 position = Vector3(0, 0, 3)
 terrain_path = NodePath("../Terrain")
 npc_name = "Reis Halvard"
