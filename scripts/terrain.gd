@@ -10,6 +10,13 @@ extends StaticBody3D
 @export var noise_seed: int = 1337
 @export var clearing_radius_ratio: float = 0.15
 
+## A fjord inlet cuts in from the south (+Z) so the village has water close
+## by. Land is unaffected before fjord_start_z, fully sunk to sea_floor_depth
+## past fjord_end_z, blended in between.
+@export var fjord_start_z: float = 18.0
+@export var fjord_end_z: float = 42.0
+@export var sea_floor_depth: float = -6.0
+
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 
@@ -31,8 +38,11 @@ func get_height(x: float, z: float) -> float:
 		_noise = _make_noise()
 	var half := terrain_size * 0.5
 	var dist_ratio: float = Vector2(x, z).length() / half
-	var falloff: float = clamp(dist_ratio, clearing_radius_ratio, 1.0)
-	return _noise.get_noise_2d(x, z) * height_scale * falloff
+	var amplitude_falloff: float = clamp(dist_ratio, clearing_radius_ratio, 1.0)
+	var raw_height := _noise.get_noise_2d(x, z) * height_scale * amplitude_falloff
+
+	var fjord_mask: float = 1.0 - smoothstep(fjord_start_z, fjord_end_z, z)
+	return lerp(sea_floor_depth, raw_height, fjord_mask)
 
 
 func _ready() -> void:

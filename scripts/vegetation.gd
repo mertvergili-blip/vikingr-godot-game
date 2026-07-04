@@ -59,11 +59,16 @@ func _random_point(terrain: Node) -> Vector2:
 	var clearing_radius: float = half * terrain.clearing_radius_ratio
 	var x: float
 	var z: float
-	while true:
+	var attempts := 0
+	while attempts < 50:
 		x = _rng.randf_range(-half, half)
 		z = _rng.randf_range(-half, half)
-		if Vector2(x, z).length() > clearing_radius * 1.6:
-			break
+		attempts += 1
+		if Vector2(x, z).length() <= clearing_radius * 1.6:
+			continue
+		if terrain.get_height(x, z) < 0.3:
+			continue
+		break
 	return Vector2(x, z)
 
 

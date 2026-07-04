@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="2"]
@@ -15,6 +15,19 @@
 [ext_resource type="PackedScene" path="res://scenes/farm_plot.tscn" id="13"]
 [ext_resource type="PackedScene" path="res://scenes/resource_tree.tscn" id="14"]
 [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="15"]
+[ext_resource type="PackedScene" path="res://assets/kenney/retro_fantasy/dock-side.glb" id="16"]
+[ext_resource type="PackedScene" path="res://assets/kenney/retro_fantasy/dock-corner.glb" id="17"]
+[ext_resource type="PackedScene" path="res://scenes/fishing_spot.tscn" id="18"]
+[ext_resource type="PackedScene" path="res://scenes/animal_resource.tscn" id="19"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ocean"]
+size = Vector2(3000, 3000)
+
+[sub_resource type="StandardMaterial3D" id="Material_ocean"]
+albedo_color = Color(0.16, 0.32, 0.38, 0.85)
+roughness = 0.05
+metallic = 0.3
+transparency = 1
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
 sky_top_color = Color(0.36, 0.46, 0.6, 1)
@@ -54,6 +67,14 @@ script = ExtResource("2")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain"]
+
+[node name="Ocean" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
+mesh = SubResource("PlaneMesh_ocean")
+surface_material_override/0 = SubResource("Material_ocean")
+
+[node name="FishingSpot" parent="." instance=ExtResource("18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 29)
 
 [node name="Vegetation" type="Node3D" parent="."]
 script = ExtResource("4")
@@ -102,6 +123,46 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 4)
 
 [node name="Tree3" parent="Gathering" instance=ExtResource("14")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -6)
+
+[node name="DockPlank1" parent="Gathering" instance=ExtResource("16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="DockPlank2" parent="Gathering" instance=ExtResource("16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22)
+
+[node name="DockPlank3" parent="Gathering" instance=ExtResource("16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+
+[node name="DockEnd" parent="Gathering" instance=ExtResource("17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 26)
+
+[node name="PenFenceNorth" parent="Gathering" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 7.5)
+
+[node name="PenFenceSouth" parent="Gathering" instance=ExtResource("11")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -6, 0, 12.5)
+
+[node name="PenFenceWest" parent="Gathering" instance=ExtResource("11")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -8.5, 0, 10)
+
+[node name="PenFenceEast" parent="Gathering" instance=ExtResource("11")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -3.5, 0, 10)
+
+[node name="Sheep" parent="Gathering" instance=ExtResource("19")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 9)
+resource_type = "wool"
+yield_amount = 1
+cooldown_time = 25.0
+action_label = "Yün Kırk"
+body_color = Color(0.93, 0.93, 0.88, 1)
+
+[node name="Goat" parent="Gathering" instance=ExtResource("19")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 11)
+resource_type = "milk"
+yield_amount = 1
+cooldown_time = 20.0
+action_label = "Süt Sağ"
+body_color = Color(0.55, 0.45, 0.35, 1)
 
 [node name="Player" parent="." instance=ExtResource("1")]
 position = Vector3(0, 3, 5)
