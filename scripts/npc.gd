@@ -14,7 +14,7 @@ extends Area3D
 @export var walk_speed: float = 1.6
 @export var wander_interval: float = 6.0
 
-@onready var anim_player: AnimationPlayer = find_child("AnimationPlayer", true, false)
+@onready var anim_player: AnimationPlayer = AnimHelper.find_animation_player(self)
 @onready var wander_timer: Timer = $WanderTimer
 
 var _terrain: Node
@@ -22,6 +22,7 @@ var _target: Vector2
 var _talking: bool = false
 var _line_index: int = 0
 var _hud: CanvasLayer
+var _current_anim: String = ""
 
 var prompt_text: String:
 	get:
@@ -35,6 +36,9 @@ func _ready() -> void:
 	var hud_nodes := get_tree().get_nodes_in_group("hud")
 	if not hud_nodes.is_empty():
 		_hud = hud_nodes[0]
+
+	if anim_player == null:
+		push_error("%s: no AnimationPlayer found — will stay in bind pose." % npc_name)
 
 	wander_timer.wait_time = wander_interval
 	wander_timer.timeout.connect(_pick_new_target)
@@ -81,8 +85,13 @@ func _snap_to_terrain() -> void:
 
 
 func _play_anim(anim_name: String) -> void:
-	if anim_player and anim_player.has_animation(anim_name) and anim_player.current_animation != anim_name:
-		anim_player.play(anim_name)
+	if anim_player == null or _current_anim == anim_name:
+		return
+	var resolved := AnimHelper.resolve_animation_name(anim_player, anim_name)
+	if resolved == "":
+		return
+	anim_player.play(resolved)
+	_current_anim = anim_name
 
 
 func interact(_player: Node) -> void:

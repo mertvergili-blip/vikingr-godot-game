@@ -12,7 +12,7 @@ extends CharacterBody3D
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @onready var camera_pivot: Node3D = $CameraPivot
-@onready var anim_player: AnimationPlayer = find_child("AnimationPlayer", true, false)
+@onready var anim_player: AnimationPlayer = AnimHelper.find_animation_player(self)
 @onready var interaction_zone: Area3D = $InteractionZone
 
 var _current_anim: String = ""
@@ -25,13 +25,21 @@ func _ready() -> void:
 	if not hud_nodes.is_empty():
 		_hud = hud_nodes[0]
 
+	if anim_player == null:
+		push_error("Player: no AnimationPlayer found under Model — character will stay in bind pose.")
+	else:
+		print("Player animations available: ", anim_player.get_animation_list())
+
 
 func _play(anim_name: String) -> void:
 	if anim_player == null or _current_anim == anim_name:
 		return
-	if anim_player.has_animation(anim_name):
-		anim_player.play(anim_name)
-		_current_anim = anim_name
+	var resolved := AnimHelper.resolve_animation_name(anim_player, anim_name)
+	if resolved == "":
+		push_warning("Player: animation '%s' not found on AnimationPlayer." % anim_name)
+		return
+	anim_player.play(resolved)
+	_current_anim = anim_name
 
 
 func _unhandled_input(event: InputEvent) -> void:
