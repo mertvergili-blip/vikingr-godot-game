@@ -7,6 +7,42 @@
       "skillPath": "skills/find-skills/SKILL.md",
       "computedHash": "1c27b1774a4ec17ad4556a72e3c0168beab3af0183b2c1b8aa9e320af3ff41ce"
     },
+    "godot-3d-lighting": {
+      "source": "thedivergentai/gd-agentic-skills",
+      "sourceType": "github",
+      "skillPath": "skills/godot-3d-lighting/SKILL.md",
+      "computedHash": "471ddbad8ff4bb5c99d71b0d4d5ca816e58bf90b69876e9ab8740a7bc4b843a9"
+    },
+    "godot-3d-materials": {
+      "source": "thedivergentai/gd-agentic-skills",
+      "sourceType": "github",
+      "skillPath": "skills/godot-3d-materials/SKILL.md",
+      "computedHash": "a5095e96026532634a28340a2a2c06183d78fc94f7db98fdcab8515b8f4d4bad"
+    },
+    "godot-3d-world-building": {
+      "source": "thedivergentai/gd-agentic-skills",
+      "sourceType": "github",
+      "skillPath": "skills/godot-3d-world-building/SKILL.md",
+      "computedHash": "34bf45d1062bf3cc785d75e685d11b5617686a48158136ab48418042cd804379"
+    },
+    "godot-animation-player": {
+      "source": "thedivergentai/gd-agentic-skills",
+      "sourceType": "github",
+      "skillPath": "skills/godot-animation-player/SKILL.md",
+      "computedHash": "b868f5e43fc87f6c9fe193cadd59299c0c075b1489bb75a03ed35d21e1dc3edf"
+    },
+    "godot-asset-generator": {
+      "source": "jwynia/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tech/game-development/godot/godot-asset-generator/SKILL.md",
+      "computedHash": "0b07b3ad870b6413ff2749c22281b09d7e5187c9ea57d9d3090a0bc4b9f69a6d"
+    },
+    "godot-best-practices": {
+      "source": "jwynia/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tech/game-development/godot/godot-best-practices/SKILL.md",
+      "computedHash": "1137c05247cfcc6547064f99c6eeddcdb0e18fab9d76b2c40d8d4cf12b6c6025"
+    },
     "godot-development": {
       "source": "zate/cc-godot",
       "sourceType": "github",
@@ -24,6 +60,12 @@
       "sourceType": "github",
       "skillPath": "skills/godot-master/SKILL.md",
       "computedHash": "fbbd03d82e9d284af7fbf436f2d18fd338e3ec657b4359425a0674f6752f3026"
+    },
+    "godot-optimization": {
+      "source": "zate/cc-godot",
+      "sourceType": "github",
+      "skillPath": "plugins/gd/skills/godot-optimization/SKILL.md",
+      "computedHash": "53447fe537f8bba9efee7a0495c54603fa572058c2df7b533f9125e487c6871b"
     },
     "godot-ui": {
       "source": "zate/cc-godot",
