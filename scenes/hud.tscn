@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1")
+
+[node name="Margin" type="MarginContainer" parent="."]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 200.0
+offset_bottom = 160.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+
+[node name="ResourceList" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="Wood" type="Label" parent="Margin/ResourceList"]
+layout_mode = 2
+text = "Odun: 0"
+
+[node name="Wheat" type="Label" parent="Margin/ResourceList"]
+layout_mode = 2
+text = "Buğday: 0"
+
+[node name="Fish" type="Label" parent="Margin/ResourceList"]
+layout_mode = 2
+text = "Balık: 0"
+
+[node name="Wool" type="Label" parent="Margin/ResourceList"]
+layout_mode = 2
+text = "Yün: 0"
+
+[node name="Milk" type="Label" parent="Margin/ResourceList"]
+layout_mode = 2
+text = "Süt: 0"
+
+[node name="Gold" type="Label" parent="Margin/ResourceList"]
+layout_mode = 2
+text = "Altın: 0"
+
+[node name="PromptLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = -80.0
+offset_right = 150.0
+offset_bottom = -50.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+text = ""
+visible = false

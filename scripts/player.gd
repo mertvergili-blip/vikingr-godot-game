@@ -13,12 +13,17 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var anim_player: AnimationPlayer = find_child("AnimationPlayer", true, false)
+@onready var interaction_zone: Area3D = $InteractionZone
 
 var _current_anim: String = ""
+var _hud: CanvasLayer
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	var hud_nodes := get_tree().get_nodes_in_group("hud")
+	if not hud_nodes.is_empty():
+		_hud = hud_nodes[0]
 
 
 func _play(anim_name: String) -> void:
@@ -44,6 +49,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 			else Input.MOUSE_MODE_CAPTURED
 		)
+
+
+func _process(_delta: float) -> void:
+	var nearest: Node = interaction_zone.get_nearest()
+	if _hud:
+		_hud.set_prompt(nearest.prompt_text if nearest and "prompt_text" in nearest else "")
+	if nearest and Input.is_action_just_pressed("interact"):
+		nearest.interact(self)
 
 
 func _physics_process(delta: float) -> void:

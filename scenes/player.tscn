@@ -1,11 +1,15 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1"]
 [ext_resource type="PackedScene" path="res://assets/characters/UAL1_Standard.glb" id="2"]
+[ext_resource type="Script" path="res://scripts/interaction_zone.gd" id="3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.4
 height = 1.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1"]
+radius = 2.5
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1")
@@ -25,3 +29,13 @@ spring_length = 4.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
 current = true
+
+[node name="InteractionZone" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone"]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("SphereShape3D_1")

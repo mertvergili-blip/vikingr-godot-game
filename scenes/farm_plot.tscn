@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/interactable_farm_plot.gd" id="1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_soil"]
+size = Vector3(3, 0.1, 3)
+
+[sub_resource type="StandardMaterial3D" id="Material_soil"]
+albedo_color = Color(0.29, 0.2, 0.14, 1)
+roughness = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_growing"]
+size = Vector3(2.4, 0.4, 2.4)
+
+[sub_resource type="StandardMaterial3D" id="Material_growing"]
+albedo_color = Color(0.32, 0.55, 0.22, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ready"]
+size = Vector3(2.4, 1.0, 2.4)
+
+[sub_resource type="StandardMaterial3D" id="Material_ready"]
+albedo_color = Color(0.82, 0.68, 0.25, 1)
+
+[node name="FarmPlot" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.3, 0)
+shape = SubResource("BoxShape3D_1")
+
+[node name="SoilPatch" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.05, 0)
+mesh = SubResource("BoxMesh_soil")
+surface_material_override/0 = SubResource("Material_soil")
+
+[node name="GrowingCrop" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.2, 0)
+mesh = SubResource("BoxMesh_growing")
+surface_material_override/0 = SubResource("Material_growing")
+
+[node name="ReadyCrop" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.5, 0)
+mesh = SubResource("BoxMesh_ready")
+surface_material_override/0 = SubResource("Material_ready")
+
+[node name="GrowTimer" type="Timer" parent="."]
